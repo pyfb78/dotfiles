@@ -3,8 +3,18 @@ let g:vimtex_quickfix_enabled = 0
 let g:tex_flavor  = 'latex'
 let g:vimtex_fold_manual = 1
 let g:vimtex_compiler_latexmk = {
-        \ 'continuous' : 1,
-        \}
+      \ 'continuous': 1,
+      \ 'callback'  : 0,
+      \ 'build_dir' : 'build',
+      \ 'options'   : [
+      \   '-pdf',
+      \   '-interaction=nonstopmode',
+      \   '-synctex=1',
+      \   '-file-line-error',
+      \   '-outdir=build',
+      \   '-auxdir=build',
+      \ ],
+      \}
 let g:vimtex_compiler_progname = 'nvr'
 " use skim if you are on Mac
 " zathura can be downloaded on latex with the command 'sudo pacman -S zathura'
