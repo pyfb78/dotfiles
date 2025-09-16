@@ -3,18 +3,8 @@ let g:vimtex_quickfix_enabled = 0
 let g:tex_flavor  = 'latex'
 let g:vimtex_fold_manual = 1
 let g:vimtex_compiler_latexmk = {
-      \ 'continuous': 1,
-      \ 'callback'  : 0,
-      \ 'build_dir' : 'build',
-      \ 'options'   : [
-      \   '-pdf',
-      \   '-interaction=nonstopmode',
-      \   '-synctex=1',
-      \   '-file-line-error',
-      \   '-outdir=build',
-      \   '-auxdir=build',
-      \ ],
-      \}
+        \ 'continuous' : 1,
+        \}
 let g:vimtex_compiler_progname = 'nvr'
 " use skim if you are on Mac
 " zathura can be downloaded on latex with the command 'sudo pacman -S zathura'
@@ -24,6 +14,7 @@ let g:vimtex_view_sioyek_exe = 'sioyek'
 let g:vimtex_view_method = 'sioyek'
 " let g:vimtex_view_method = "zathura"
 let g:vimtex_compiler_method = "latexmk"
+let g:vimtex_view_sioyek_option='--reuse-instance'
 " let g:vimtex_callback_progpath ='/opt/homebrew/bin/nvim'
 " let g:vimtex_view_method = 'zathura'
 "switch back to this one later when it is fixed
@@ -65,3 +56,5 @@ augroup init_vimtex
   autocmd!
   autocmd User VimtexEventView call b:vimtex.viewer.xdo_focus_vim()
 augroup END
+
+let g:vimtex_quickfix_mode = 0
