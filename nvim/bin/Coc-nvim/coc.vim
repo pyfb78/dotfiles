@@ -182,3 +182,5 @@ autocmd BufWritePre *.ts,*.tsx CocCommand tsserver.executeFormat
 " hi CocFloatingBorder   guifg=#565f89 guibg=#1a1b26
 "
 let g:coc_filetype_map = {'tex': 'latex'}
+
+nmap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
