@@ -3,6 +3,11 @@ x-scheme-handler/mailto=userapp-Thunderbird-9H1OB3.desktop
 message/rfc822=userapp-Thunderbird-9H1OB3.desktop
 x-scheme-handler/mid=userapp-Thunderbird-9H1OB3.desktop
 x-scheme-handler/mailspring=Mailspring.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+text/html=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
 
 [Added Associations]
 x-scheme-handler/mailto=userapp-Thunderbird-9H1OB3.desktop;
