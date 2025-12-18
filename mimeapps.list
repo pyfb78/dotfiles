@@ -14,3 +14,4 @@ application/pdf=sioyek.desktop
 x-scheme-handler/mailto=userapp-Thunderbird-9H1OB3.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-9H1OB3.desktop;
 application/pdf=sioyek.desktop;
+application/zip=firefox.desktop;
