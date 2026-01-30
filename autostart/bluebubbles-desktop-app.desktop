@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Version=1.0
-Name=bluebubbles-desktop-app
-Comment=bluebubbles-desktop-appstartup script
-Exec=/opt/BlueBubbles/bluebubbles-desktop-app --hidden
-StartupNotify=false
-Terminal=false
