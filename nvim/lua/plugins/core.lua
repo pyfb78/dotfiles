@@ -64,65 +64,37 @@ return {
   { 'kyazdani42/nvim-web-devicons', lazy = true },
 
   {
-    'lervag/vimtex',
-    ft = 'tex',
-    init = function()
-      vim.g.vimtex_quickfix_enabled = 0
-      vim.g.tex_flavor = 'latex'
-      vim.g.vimtex_fold_manual = 1
-      vim.g.vimtex_compiler_latexmk = { continuous = 1 }
-      vim.g.vimtex_compiler_progname = 'nvr'
-      vim.g.vimtex_view_sioyek_exe = 'sioyek'
-      vim.g.vimtex_view_method = 'sioyek'
-      vim.g.vimtex_compiler_method = 'latexmk'
-      vim.g.vimtex_view_sioyek_option = '--reuse-instance'
-      vim.g.vimtex_quickfix_mode = 0
-    end,
-    config = function()
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'tex',
-        callback = function()
-          if vim.fn.exists('*AutoPairsDefine') == 1 then
-            vim.b.AutoPairs = vim.fn.AutoPairsDefine({ ['$'] = '$' })
-          end
-        end,
-      })
+  'lervag/vimtex',
+  lazy = false,
+  init = function()
+    vim.g.tex_flavor = 'latex'
 
-      local function tex_focus_vim()
-        vim.fn.jobstart({ 'open', '-a', 'kitty' }, { detach = true })
-        vim.cmd.redraw()
-      end
+    vim.g.vimtex_quickfix_enabled = 0
+    vim.g.vimtex_quickfix_mode = 0
+    vim.g.vimtex_fold_manual = 1
 
-      vim.api.nvim_create_augroup('vimtex_event_focus1', { clear = true })
-      vim.api.nvim_create_autocmd('User', {
-        group = 'vimtex_event_focus1',
-        pattern = 'VimtexEventViewReverse',
-        callback = tex_focus_vim,
-      })
-      vim.api.nvim_create_augroup('vimtex_event_focus2', { clear = true })
-      vim.api.nvim_create_autocmd('User', {
-        group = 'vimtex_event_focus2',
-        pattern = 'VimtexEventView',
-        callback = tex_focus_vim,
-      })
-      vim.api.nvim_create_augroup('init_vimtex1', { clear = true })
-      vim.api.nvim_create_autocmd('User', {
-        group = 'init_vimtex1',
-        pattern = 'VimtexEventViewReverse',
-        callback = function()
-          pcall(function() vim.b.vimtex.viewer.xdo_focus_vim() end)
-        end,
-      })
-      vim.api.nvim_create_augroup('init_vimtex', { clear = true })
-      vim.api.nvim_create_autocmd('User', {
-        group = 'init_vimtex',
-        pattern = 'VimtexEventView',
-        callback = function()
-          pcall(function() vim.b.vimtex.viewer.xdo_focus_vim() end)
-        end,
-      })
-    end,
-  },
+    vim.g.vimtex_compiler_method = 'latexmk'
+    vim.g.vimtex_compiler_latexmk = {
+      callback = 1,
+      continuous = 1,
+      executable = 'latexmk',
+      options = {
+        '-verbose',
+        '-file-line-error',
+        '-synctex=1',
+        '-interaction=nonstopmode',
+      },
+    }
+
+    vim.g.vimtex_view_method = 'sioyek'
+    vim.g.vimtex_view_sioyek_exe = 'sioyek'
+
+    -- Keep this empty for now. Add --reuse-instance later only after it works.
+    vim.g.vimtex_view_sioyek_options = ''
+
+    vim.g.vimtex_callback_progpath = vim.fn.exepath('nvim')
+  end,
+},
 
   {
     'nvim-treesitter/nvim-treesitter',

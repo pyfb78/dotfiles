@@ -3,8 +3,8 @@
 
 pcall(vim.loader.enable)
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = '\\'
+vim.g.maplocalleader = '\\'
 
 require('config.options')
 require('config.keymaps')
