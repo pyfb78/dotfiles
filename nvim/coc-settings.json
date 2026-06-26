@@ -1,110 +1,77 @@
 {
-"diagnostic.errorSign": " ",
-"diagnostic.warningSign": " ",
-"diagnostic.infoSign": " ",
-"diagnostic.hintSign": "󰌶 ",
-"diagnostic.refreshOnInsertMode": true,
-"diagnostic.virtualTextPrefix": " ■ ",
-"diagnostic.checkCurrentLine": true,
-"coc.source.buffer.enable": false,
-"coc.source.around.enable": false,
-"coc.source.file.enable": false,
-"clangd.fallbackFlags": [
-   "-xc++",
-   "-std=c++17",
-  "-O2",
-  "-Wall" 
-],
-"clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd",
-//"python.pythonPath": "/usr/bin/python",
-//"python.venvPath": "/usr/local/lib/python3.10/site-packages",
-//"python.venvPath": "/opt/homebrew/lib/python3.10/site-packages",
-"python.venvPath": "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages",
-"diagnostic.virtualTextCurrentLineOnly": false,
-"diagnostic.virtualText": true,
-"diagnostic.enableMessage": "jump",
-"languageserver": {
+  "diagnostic.errorSign": " ",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": " ",
+  "diagnostic.hintSign": "󰌶 ",
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.virtualTextPrefix": " ■ ",
+  "diagnostic.checkCurrentLine": true,
+  "coc.source.buffer.enable": false,
+  "coc.source.around.enable": false,
+  "coc.source.file.enable": false,
+  "clangd.fallbackFlags": [
+    "-xc++",
+    "-std=c++17",
+    "-O2",
+    "-Wall"
+  ],
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd",
+  "python.venvPath": "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages",
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualText": true,
+  "diagnostic.enableMessage": "jump",
+  "languageserver": {
     "godot": {
       "host": "127.0.0.1",
-      "filetypes": ["gdscript"],
+      "filetypes": [
+        "gdscript"
+      ],
       "port": 6008
     }
   },
   "suggest.completionItemKindLabels": {
-    // "variable": "󱃻  var",
-    // "constant": "  const",
-    // "struct": "  struct",
-    // "class": "  class",
-    // "interface": "  interface",
-    // "text": "  text",
-    // "enum": "  enum",
-    // "enumMember": "  enumMember",
-    // "color": "  color",
-    // "property": "  property",
-    // "field": "  field",
-    // "unit": "  unit",
-    // "file": "  file",
-    // "value": "\uf8a3 value",
-    // "event": " event",
-    // "folder": "\uf115 folder",
-    // "keyword": "  keyword",
-    // "snippet": "  snippet",
-    // "operator": "  operator",
-    // "reference": "  reference",
-    // "typeParameter": "  parameter",
-    // "default": "\uf29c",
     "text": "󰉿",
     "method": "󰆧",
     "function": "󰊕",
     "constructor": "",
     "field": "󰜢",
-    "variable":  "󰀫",
-    "class" : "󰠱",
-    "interface" : "",
-    "module" : "",
-    "property" : "󰜢",
-    "unit" : "塞",
-    "value" : "󰎠",
-    "enum" : "",
-    "keyword" : "󰌋",
-    "snippet" : "",
-    "color" : "󰏘",
-    "file" : "󰈙",
-    "reference" : "󰈇",
-    "folder" : "󰉋",
-    "enumMember" : "",
-    "constant" : "󰏿",
-    "struct" : "󰠱",
-    "event" : "",
-    "operator" : "󰆕",
-    "typeParameter" : "",
+    "variable": "󰀫",
+    "class": "󰠱",
+    "interface": "",
+    "module": "",
+    "property": "󰜢",
+    "unit": "塞",
+    "value": "󰎠",
+    "enum": "",
+    "keyword": "󰌋",
+    "snippet": "",
+    "color": "󰏘",
+    "file": "󰈙",
+    "reference": "󰈇",
+    "folder": "󰉋",
+    "enumMember": "",
+    "constant": "󰏿",
+    "struct": "󰠱",
+    "event": "",
+    "operator": "󰆕",
+    "typeParameter": ""
   },
   "floatFactory.floatConfig": {
-      "winblend": 15
+    "winblend": 15
   },
-  "coc.source.OmniSharp.enable" : true,
+  "coc.source.OmniSharp.enable": true,
   "coc.source.OmniSharp.triggerCharacters": ".",
   "diagnostic.enable": true,
-  // "signature.floatConfig": {
-  //   "border": true,         // Options: "single", "double", "rounded", "none"
-  //   "rounded": true,
-  //   "highlight": "NormalFloat",  // Highlight group for the floating window
-  //   "winblend": 10,              // Window transparency (0-100, 0 is opaque, 100 is fully transparent)
-  //   "maxHeight": 10,             // Maximum height of the floating window
-  //   "maxWidth": 80,              // Maximum width of the floating window
-  // }
-  // "signature.target": "float"
   "inlayHint.enable": false,
-  "suggest.enableFloat": true,                // enable float for the popupmenu
-  "suggest.floatConfig": {                     // style the completion float
-    "border": true,                            // turn on a border
-    "rounded": true,                           // make its corners rounded
-    "highlight": "CocFloating",                // background highlight group
-    "borderhighlight": "CocFloating"           // border highlight group
+  "suggest.enableFloat": true,
+  "suggest.floatConfig": {
+    "border": true,
+    "rounded": true,
+    "highlight": "CocFloating",
+    "borderhighlight": "CocFloating"
   },
-  "hover.floatConfig": {                       // style the hover/docs float too
+  "hover.floatConfig": {
     "border": true,
     "rounded": true
   }
 }
-
