@@ -51,7 +51,13 @@ return {
   { 'sheerun/vim-polyglot', lazy = false, priority = 900 },
   { 'tpope/vim-surround', event = 'VeryLazy' },
   { 'tpope/vim-commentary', event = 'VeryLazy' },
-  { 'jiangmiao/auto-pairs', event = 'InsertEnter' },
+  {
+  'jiangmiao/auto-pairs',
+    event = 'InsertEnter',
+    config = function()
+      vim.cmd('silent! call AutoPairsInit()')
+    end,
+  },
   { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
   { 'joom/latex-unicoder.vim', ft = 'tex' },
   { 'jdhao/better-escape.vim', event = 'InsertEnter', init = function()
