@@ -108,7 +108,6 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# export OPENAI_API_KEY = "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"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#9db1c5'
