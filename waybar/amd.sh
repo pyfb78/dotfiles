@@ -1,40 +1,56 @@
 #!/bin/bash
 
-icon=""
+icon="󰘚"
 
-# === GPU USAGE ===
-gpu_output=$(radeontop -d - -l 1 2>/dev/null | grep -m 1 "gpu")
-gpu_usage=$(echo "$gpu_output" | grep -oP 'gpu \K[0-9.]+' | cut -d. -f1)
+# === GPU INFO ===
+gpu_info=$(nvidia-smi \
+    --query-gpu=utilization.gpu,memory.used,memory.total \
+    --format=csv,noheader,nounits 2>/dev/null | head -n 1)
 
-# Fallback if missing
-[ -z "$gpu_usage" ] && gpu_usage="N/A"
+if [[ -n "$gpu_info" ]]; then
+    IFS=',' read -r gpu_usage vram_used_mb vram_total_mb <<< "$gpu_info"
 
-# === VRAM USAGE ===
-vram_used_file="/sys/class/drm/card0/device/mem_info_vram_used"
-vram_total_file="/sys/class/drm/card0/device/mem_info_vram_total"
+    # Strip whitespace
+    gpu_usage=$(echo "$gpu_usage" | xargs)
+    vram_used_mb=$(echo "$vram_used_mb" | xargs)
+    vram_total_mb=$(echo "$vram_total_mb" | xargs)
 
-if [[ -f $vram_used_file && -f $vram_total_file ]]; then
-    vram_used_kb=$(($(cat "$vram_used_file") / 1024))
-    vram_total_kb=$(($(cat "$vram_total_file") / 1024))
-    vram_used_mb=$((vram_used_kb / 1024))
-    vram_total_mb=$((vram_total_kb / 1024))
-    vram_percent=$((100 * vram_used_kb / vram_total_kb))
+    if [[ "$vram_total_mb" -gt 0 ]]; then
+        vram_percent=$((100 * vram_used_mb / vram_total_mb))
+    else
+        vram_percent=0
+    fi
+
     vram_display="${vram_used_mb}MiB / ${vram_total_mb}MiB (${vram_percent}%)"
 else
+    gpu_usage="N/A"
     vram_display="N/A"
 fi
 
-# === TOP PROCESSES ===
-process_list=$(radeontop -d - -l 1 2>/dev/null | grep -A 10 "gpu" | tail -n +2 | sed 's/^ *//;s/ *$//' | grep -v '^$' | head -5)
+# === TOP GPU PROCESSES ===
+process_list=$(
+    nvidia-smi \
+        --query-compute-apps=pid,process_name,used_gpu_memory \
+        --format=csv,noheader,nounits 2>/dev/null |
+    sort -t',' -k3 -nr |
+    head -5 |
+    awk -F',' '{
+        gsub(/^[ \t]+|[ \t]+$/, "", $1)
+        gsub(/^[ \t]+|[ \t]+$/, "", $2)
+        gsub(/^[ \t]+|[ \t]+$/, "", $3)
+        printf "PID: %s | %s | %s MiB\\n", $1, $2, $3
+    }'
+)
 
-if [ -z "$process_list" ]; then
+if [[ -z "$process_list" ]]; then
     process_list="No GPU-intensive processes found"
 fi
 
 # === TOOLTIP ===
-tooltip="AMD GPU Usage: ${gpu_usage}%\nTop Processes:\n$process_list"
+tooltip="NVIDIA GPU Usage: ${gpu_usage}%\\nVRAM: ${vram_display}\\n\\nTop Processes:\\n${process_list}"
+
+# Escape quotes for Waybar JSON
 escaped_tooltip="${tooltip//\"/\\\"}"
 
 # === JSON OUTPUT ===
 echo "{\"text\": \"$icon ${gpu_usage}%\", \"tooltip\": \"$escaped_tooltip\"}"
-

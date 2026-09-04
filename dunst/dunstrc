@@ -99,7 +99,7 @@ foreground = "#eaeaea"
 frame_color = "#3a3a3a"
 timeout = 3
 # Use PNG if your build can’t load SVGs
-icon = "/home/bruce/.config/dunst/icons/low.svg"
+icon = "/home/batman/.config/dunst/icons/low.svg"
 
 
 [urgency_normal]
@@ -107,7 +107,7 @@ background = "#111111"
 foreground = "#eaeaea"
 frame_color = "#5c5c5c"
 timeout = 4
-icon = "/home/bruce/.config/dunst/icons/pokeball.svg"
+icon = "/home/batman/.config/dunst/icons/pokeball.svg"
 
 
 [urgency_critical]
@@ -115,5 +115,5 @@ background = "#1a1a1a"
 foreground = "#ffffff"
 frame_color = "#ff4d4d"
 timeout = 0
-icon = "/home/bruce/.config/dunst/icons/critical.svg"
+icon = "/home/batman/.config/dunst/icons/critical.svg"
 

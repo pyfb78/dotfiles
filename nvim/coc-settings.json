@@ -73,5 +73,9 @@
   "hover.floatConfig": {
     "border": true,
     "rounded": true
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://www.schemastore.org": true,
+    "https://json.schemastore.org": true
   }
 }

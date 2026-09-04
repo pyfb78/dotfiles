@@ -1,35 +1,4 @@
 [Default Applications]
-x-scheme-handler/mailto=userapp-Thunderbird-9H1OB3.desktop
-message/rfc822=userapp-Thunderbird-9H1OB3.desktop
-x-scheme-handler/mid=userapp-Thunderbird-9H1OB3.desktop
-x-scheme-handler/mailspring=Mailspring.desktop
-x-scheme-handler/http=firefox.desktop
-x-scheme-handler/https=firefox.desktop
-text/html=firefox.desktop
-x-scheme-handler/about=vivaldi-stable.desktop
-x-scheme-handler/unknown=vivaldi-stable.desktop
-application/pdf=sioyek.desktop
-x-scheme-handler/chrome=firefox.desktop
-application/x-extension-htm=firefox.desktop
-application/x-extension-html=firefox.desktop
-application/x-extension-shtml=firefox.desktop
-application/xhtml+xml=firefox.desktop
-application/x-extension-xhtml=firefox.desktop
-application/x-extension-xht=firefox.desktop
+x-scheme-handler/slack=slack.desktop
 
 [Added Associations]
-x-scheme-handler/mailto=userapp-Thunderbird-9H1OB3.desktop;
-x-scheme-handler/mid=userapp-Thunderbird-9H1OB3.desktop;
-application/pdf=sioyek.desktop;
-application/zip=firefox.desktop;
-x-scheme-handler/http=firefox.desktop;zen.desktop;
-x-scheme-handler/https=firefox.desktop;zen.desktop;
-x-scheme-handler/chrome=firefox.desktop;zen.desktop;
-text/html=zen.desktop;firefox.desktop;
-application/x-extension-htm=zen.desktop;firefox.desktop;
-application/x-extension-html=zen.desktop;firefox.desktop;
-application/x-extension-shtml=zen.desktop;firefox.desktop;
-application/xhtml+xml=zen.desktop;firefox.desktop;
-application/x-extension-xhtml=zen.desktop;firefox.desktop;
-application/x-extension-xht=zen.desktop;firefox.desktop;
-application/vnd.amazon.mobi8-ebook=firefox.desktop;

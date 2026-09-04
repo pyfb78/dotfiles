@@ -72,7 +72,8 @@
 //     "max-length": 50
 // },
 "custom/amd": {
-	  "exec": "/home/bruce/.config/waybar/amd.sh",
+	  "exec": "~/.config/waybar/amd.sh",
+    // "font-family": "JetBrainsMono Nerd Font",
 	  "interval": 1,
 	  "tooltip":true,
   "return-type": "json"
@@ -86,7 +87,7 @@
         "interval": 25
     },
   "custom/battery": {
-	  "exec": "/home/bruce/.config/waybar/battery.sh",
+	  "exec": "~/.config/waybar/battery.sh",
 	  "interval": 2,
 	  "tooltip":true,
   "return-type": "json"
@@ -128,11 +129,11 @@
   },
 
 "clock#simpleclock": {
-  "format": " {:%I:%M %p}",
-  "format-alt": "{:%A, %B %d, %Y (%I:%M %p)}  ",
+  "format": " {:%A, %B %d, %Y (%I:%M %p)}",
+  "format-alt": " {:%I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
-                    "mode"          : "year",
+                    "mode"          : "month",
                     "mode-mon-col"  : 3,
                     "weeks-pos"     : "right",
                     "on-scroll"     : 1,
@@ -181,7 +182,7 @@
     "tooltip-format": "<span color='#cdd6f4' font='Lexend 16'><tt><small>{calendar}</small></tt></span>",
   },
   "custom/processor": {
-	  "exec": "/home/bruce/.config/waybar/processor.sh",
+	  "exec": "~/.config/waybar/processor.sh",
 	  "interval": 1,
 	  "tooltip":true,
   "return-type": "json"
@@ -219,5 +220,5 @@
     "on-click": "sleep 0.1 && swaync-client -t -sw",
     "return-type": "json",
     "tooltip": false,
-  },
+  }
 }

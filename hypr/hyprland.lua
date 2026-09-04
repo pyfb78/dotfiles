@@ -1,4 +1,4 @@
--- Hyprland Lua configuration
+    -- Hyprland Lua configuration
 -- Converted from the legacy hyprlang config for Hyprland 0.55+ / 0.57.
 -- Current config location: ~/.config/hypr/hyprland.lua
 
@@ -7,7 +7,7 @@
 ------------------
 
 hl.monitor({
-    output = "eDP-2",
+    output = "eDP-1",
     mode = "2560x1600@120.0",
     position = "0x0",
     scale = 1.0,
@@ -40,6 +40,8 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE")
     hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
     hl.exec_cmd("hypridle")
+    hl.exec_cmd("dunst")
+    hl.exec_cmd("pkill waybar || waybar")
 end)
 
 -------------------------------
@@ -255,9 +257,8 @@ hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDI
 hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),       { locked = true, repeating = true })
 hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),      { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),    { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl s 5%+"),                              { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"),                              { locked = true, repeating = true })
-
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%-"), { locked = true, repeating = true })
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),      { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -366,4 +367,12 @@ hl.window_rule({
     name = "windowrule-10",
     match = { class = "^(kitty)$" },
     scroll_touchpad = 1,
+})
+
+hl.layer_rule({
+    match = {
+        namespace = "^swaync-control-center$",
+    },
+    blur = true,
+    ignore_alpha = 0.1,
 })
