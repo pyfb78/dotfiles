@@ -10,13 +10,13 @@
   "modules-left": ["hyprland/workspaces", "hyprland/window"],
   "modules-center": ["mpris"],
   "modules-right": [
-	  "bluetooth",
-	"custom/battery",
-    "custom/processor",
-    "custom/amd",
-    // "memory",
-    "pulseaudio",
-    // "clock",
+  "bluetooth",
+  "custom/battery",
+  "custom/processor",
+  "custom/amd",
+  // "memory",
+  "backlight",
+  "pulseaudio",    // "clock",
     "clock#simpleclock",
     "custom/notification",
 "network",
@@ -190,6 +190,23 @@
   "memory": {
     "format": " {used:0.1f}Gi",
   },
+  "backlight": {
+  "format": "{icon} {percent}%",
+  "format-icons": [
+    "󰹏",
+    "󱩎",
+    "󱩏",
+    "󱩐",
+    "󱩑",
+    "󱩒",
+    "󱩓",
+    "󱩔",
+    "󱩕",
+    "󱩖",
+    "󰛨"
+  ],
+  "tooltip-format": "Brightness: {percent}%"
+},
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": " muted",

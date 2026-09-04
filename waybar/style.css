@@ -45,6 +45,7 @@ window#waybar {
 #custom-battery,
 #clock,
 #pulseaudio,
+#backlight,
 #custom-logo,
 #custom-power,
 #custom-spotify,
@@ -125,6 +126,9 @@ window#waybar.empty #window {
   color: #f38ba8;
 }
 
+#backlight {
+  color: #f9e2af;
+}
 tooltip {
   background-color: #181825;
   border: 2px solid #89b4fa;
