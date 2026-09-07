@@ -1,4 +1,4 @@
-    -- Hyprland Lua configuration
+-- Hyprland Lua configuration
 -- Converted from the legacy hyprlang config for Hyprland 0.55+ / 0.57.
 -- Current config location: ~/.config/hypr/hyprland.lua
 
@@ -257,12 +257,12 @@ hl.bind("XF86AudioRaiseVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDI
 hl.bind("XF86AudioLowerVolume",  hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),       { locked = true, repeating = true })
 hl.bind("XF86AudioMute",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),      { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute",      hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),    { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%-"), { locked = true, repeating = true })
-hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),      { locked = true })
-hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%+"),          { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -d intel_backlight s 5%-"),          { locked = true, repeating = true })
+hl.bind("XF86AudioNext",         hl.dsp.exec_cmd("playerctl next"),                                  { locked = true })
+hl.bind("XF86AudioPause",        hl.dsp.exec_cmd("playerctl play-pause"),                            { locked = true })
+hl.bind("XF86AudioPlay",         hl.dsp.exec_cmd("playerctl play-pause"),                            { locked = true })
+hl.bind("XF86AudioPrev",         hl.dsp.exec_cmd("playerctl previous"),                              { locked = true })
 
 -- Resize active window with SUPER+SHIFT+arrows
 hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.resize({ x = 10,  y = 0,   relative = true }))
@@ -300,6 +300,54 @@ hl.bind("CTRL + " .. mainMod .. " + SHIFT + 2", hl.dsp.workspace.move({ monitor 
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------
 
+---------------------------------
+---- WORKSPACE MONITOR RULES ----
+---------------------------------
+
+-- HDMI-A-1:
+--   workspace 1 -> Firefox
+--   workspace 2 -> general
+--   workspace 5 -> Zotero
+
+hl.workspace_rule({
+    workspace = "1",
+    monitor = "HDMI-A-1",
+})
+
+hl.workspace_rule({
+    workspace = "2",
+    monitor = "HDMI-A-1",
+})
+
+hl.workspace_rule({
+    workspace = "5",
+    monitor = "HDMI-A-1",
+})
+
+-- eDP-1:
+--   workspace 3 -> Discord
+--   workspace 4 -> Slack
+--   workspace 6 -> Spotify
+
+hl.workspace_rule({
+    workspace = "3",
+    monitor = "eDP-1",
+})
+
+hl.workspace_rule({
+    workspace = "4",
+    monitor = "eDP-1",
+})
+
+hl.workspace_rule({
+    workspace = "6",
+    monitor = "eDP-1",
+})
+
+----------------------
+---- WINDOW RULES ----
+----------------------
+
 -- Ignore maximize requests from apps
 hl.window_rule({
     name = "windowrule-1",
@@ -321,53 +369,103 @@ hl.window_rule({
     no_focus = true,
 })
 
+-- Zathura
 hl.window_rule({
     name = "windowrule-3",
     match = { class = "^(Zathura)$" },
     opacity = "0.9 0.9",
 })
 
+-- Firefox -> workspace 1 -> HDMI-A-1
+--
+-- Covers the normal Firefox class as well as the common Flatpak app ID.
 hl.window_rule({
     name = "windowrule-4",
-    match = { class = "^(firefox)$" },
+    match = {
+        class = "^(firefox|Firefox|org\\.mozilla\\.firefox)$",
+    },
     opacity = "0.9",
+    workspace = "1",
 })
 
+-- VS Code
 hl.window_rule({
     name = "windowrule-5",
     match = { class = "^(Code)$" },
     opacity = "0.95",
 })
 
+-- Nemo
 hl.window_rule({
     name = "windowrule-6",
     match = { class = "^(nemo)$" },
     opacity = "0.95",
 })
 
+-- Discord -> workspace 3 -> eDP-1
+--
+-- Covers native/package and Flatpak class names.
 hl.window_rule({
     name = "windowrule-7",
-    match = { class = "^(discord)$" },
+    match = {
+        class = "^(discord|Discord|com\\.discordapp\\.Discord)$",
+    },
     opacity = "0.9",
+    workspace = "3",
 })
 
+-- Spotify -> workspace 6 -> eDP-1
+--
+-- Covers both the older Spotify class and the native Wayland /
+-- Flatpak com.spotify.Client app ID.
 hl.window_rule({
     name = "windowrule-8",
-    match = { class = "^(spotify)$" },
+    match = {
+        class = "^(spotify|Spotify|com\\.spotify\\.Client)$",
+    },
     opacity = "0.9",
+    workspace = "6",
 })
 
+-- Neovide
 hl.window_rule({
     name = "windowrule-9",
     match = { class = "^(neovide)$" },
     opacity = "0.9",
 })
 
+-- Kitty
 hl.window_rule({
     name = "windowrule-10",
     match = { class = "^(kitty)$" },
     scroll_touchpad = 1,
 })
+
+-- Slack -> workspace 4 -> eDP-1
+--
+-- Covers native/package and Flatpak class names.
+hl.window_rule({
+    name = "workspace-slack",
+    match = {
+        class = "^(Slack|slack|com\\.slack\\.Slack)$",
+    },
+    workspace = "4",
+})
+
+-- Zotero -> workspace 5 -> HDMI-A-1
+--
+-- Covers normal and Flatpak class names.
+hl.window_rule({
+    name = "workspace-zotero",
+    match = {
+        class = "^(Zotero|zotero|org\\.zotero\\.Zotero)$",
+    },
+    workspace = "5",
+})
+
+---------------------
+---- LAYER RULES ----
+---------------------
 
 hl.layer_rule({
     match = {
