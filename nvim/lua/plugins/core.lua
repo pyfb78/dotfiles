@@ -53,11 +53,29 @@ return {
   { 'tpope/vim-commentary', event = 'VeryLazy' },
   {
   'jiangmiao/auto-pairs',
-    event = 'InsertEnter',
-    config = function()
+  event = 'InsertEnter',
+  config = function()
+    local function setup_latex_pairs()
+      vim.b.AutoPairs = vim.fn.AutoPairsDefine({ ['$'] = '$' })
       vim.cmd('silent! call AutoPairsInit()')
-    end,
-  },
+    end
+
+    local group = vim.api.nvim_create_augroup('latex_auto_pairs', { clear = true })
+
+    vim.api.nvim_create_autocmd('FileType', {
+      group = group,
+      pattern = 'tex',
+      callback = setup_latex_pairs,
+    })
+
+    -- FileType may already have fired before auto-pairs lazy-loads.
+    if vim.bo.filetype == 'tex' then
+      setup_latex_pairs()
+    else
+      vim.cmd('silent! call AutoPairsInit()')
+    end
+  end,
+},
   { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
   { 'joom/latex-unicoder.vim', ft = 'tex' },
   { 'jdhao/better-escape.vim', event = 'InsertEnter', init = function()
