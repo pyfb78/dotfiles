@@ -98,3 +98,13 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 local colors = require('config.colors')
 vim.api.nvim_create_autocmd('ColorScheme', { callback = colors.apply })
 vim.api.nvim_create_autocmd('VimEnter', { callback = colors.apply })
+
+vim.treesitter.language.register('latex', 'tex')
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'tex',
+  callback = function()
+    vim.bo.syntax = ''
+    vim.treesitter.start()
+  end,
+})
