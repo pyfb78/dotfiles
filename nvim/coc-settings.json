@@ -6,30 +6,25 @@
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.virtualTextPrefix": " ■ ",
   "diagnostic.checkCurrentLine": true,
-  "coc.source.buffer.enable": false,
-  "coc.source.around.enable": false,
-  "coc.source.file.enable": false,
-  "clangd.fallbackFlags": [
-    "-xc++",
-    "-std=c++17",
-    "-O2",
-    "-Wall"
-  ],
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd",
-  "python.venvPath": "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages",
   "diagnostic.virtualTextCurrentLineOnly": false,
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "jump",
-  "languageserver": {
-    "godot": {
-      "host": "127.0.0.1",
-      "filetypes": [
-        "gdscript"
-      ],
-      "port": 6008
-    }
-  },
+  "diagnostic.enable": true,
+
+  "coc.source.buffer.enable": false,
+  "coc.source.around.enable": false,
+  "coc.source.file.enable": false,
+
+  "suggest.formatItems": [
+    "kind",
+    "abbr",
+    "menu",
+    "shortcut"
+  ],
+  "suggest.snippetIndicator": "~",
+  "suggest.enableFloat": true,
   "suggest.completionItemKindLabels": {
+    "default": "󰘦",
     "text": "󰉿",
     "method": "󰆧",
     "function": "󰊕",
@@ -54,28 +49,74 @@
     "struct": "󰠱",
     "event": "",
     "operator": "󰆕",
-    "typeParameter": ""
+    "typeParameter": "󰊄"
   },
-  "floatFactory.floatConfig": {
-    "winblend": 15
-  },
-  "coc.source.OmniSharp.enable": true,
-  "coc.source.OmniSharp.triggerCharacters": ".",
-  "diagnostic.enable": true,
-  "inlayHint.enable": false,
-  "suggest.enableFloat": true,
   "suggest.floatConfig": {
     "border": true,
     "rounded": true,
     "highlight": "CocFloating",
     "borderhighlight": "CocFloating"
   },
+  "suggest.pumFloatConfig": {
+    "border": true,
+    "rounded": true
+  },
+
+  "floatFactory.floatConfig": {
+    "winblend": 15
+  },
   "hover.floatConfig": {
     "border": true,
     "rounded": true
   },
+
+  "clangd.fallbackFlags": [
+    "-xc++",
+    "-std=c++17",
+    "-O2",
+    "-Wall"
+  ],
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/17.0.3/clangd_17.0.3/bin/clangd",
+
+  "python.venvPath": "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages",
+
+  "languageserver": {
+    "godot": {
+      "host": "127.0.0.1",
+      "filetypes": [
+        "gdscript"
+      ],
+      "port": 6008
+    },
+    "tinymist": {
+      "command": "tinymist",
+      "filetypes": [
+        "typst"
+      ],
+      "rootPatterns": [
+        "typst.toml",
+        ".git"
+      ],
+      "disabledFeatures": [
+        "semanticTokens"
+      ],
+      "settings": {
+        "formatterMode": "typstyle",
+        "formatterProseWrap": "none",
+        "formatterIndentSize": 2,
+        "formatterPrintWidth": 120
+      }
+    }
+  },
+
+  "coc.source.OmniSharp.enable": true,
+  "coc.source.OmniSharp.triggerCharacters": ".",
+
+  "inlayHint.enable": false,
+
   "json.schemaDownload.trustedDomains": {
     "https://www.schemastore.org": true,
     "https://json.schemastore.org": true
   }
 }
+

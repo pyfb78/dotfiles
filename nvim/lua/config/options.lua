@@ -3,6 +3,10 @@ local opt = vim.opt
 vim.g.python3_host_prog = vim.env.PYTHON3_HOST_PROG or '/usr/bin/python3'
 
 vim.cmd('filetype indent plugin on')
+
+-- Keep Vim's syntax engine available as a fallback for filetypes without an
+-- installed Tree-sitter parser. The Tree-sitter FileType autocmd disables
+-- regex syntax locally whenever Tree-sitter starts successfully.
 vim.cmd('syntax on')
 
 opt.compatible = false
@@ -46,7 +50,6 @@ opt.linebreak = true
 opt.undofile = true
 opt.fillchars = { eob = ' ', fold = ' ', foldopen = ' ', foldsep = ' ', foldclose = ' ' }
 
--- Original indentation behavior, but scoped and readable.
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = { '*.py', '*.java', '*.cpp', '*.c', '*.rkt', '*.h', '*.tex', '*.vim', '*.vimrc', '*.json', '*.lua' },
   callback = function()
@@ -62,7 +65,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 })
 
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-  pattern = { '*.css', '*.html', '*.js', '*.ts', '*.jsx', '*.tsx' },
+  pattern = { '*.css', '*.html', '*.js', '*.ts', '*.jsx', '*.tsx', '*.typ' },
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.softtabstop = 2
@@ -76,16 +79,13 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'tex',
+  pattern = { 'tex', 'typst' },
   callback = function()
     vim.opt_local.spell = true
   end,
 })
 
--- Original vim-polyglot Python whitespace fix.
-vim.g.python_highlight_space_errors = 0
-
--- i3config highlighting.
+-- i3config highlighting/filetype detection.
 vim.api.nvim_create_augroup('i3config_ft_detection', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   group = 'i3config_ft_detection',
@@ -98,13 +98,3 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 local colors = require('config.colors')
 vim.api.nvim_create_autocmd('ColorScheme', { callback = colors.apply })
 vim.api.nvim_create_autocmd('VimEnter', { callback = colors.apply })
-
-vim.treesitter.language.register('latex', 'tex')
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'tex',
-  callback = function()
-    vim.bo.syntax = ''
-    vim.treesitter.start()
-  end,
-})

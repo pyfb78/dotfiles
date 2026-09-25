@@ -13,9 +13,6 @@ return {
     end,
   },
 
-  -- Your old config installed the dedicated bluz71 Nightfly plugin before
-  -- setting `colorscheme nightfly`.  v2 accidentally relied on the big
-  -- awesome-vim-colorschemes pack, which gives a different palette.
   {
     'bluz71/vim-nightfly-guicolors',
     lazy = false,
@@ -23,9 +20,6 @@ return {
     init = function()
       vim.opt.background = 'dark'
       vim.opt.termguicolors = true
-      -- Keep the same behavior as the old config: do not enable Nightfly's
-      -- global transparent option, because the old config only manually made
-      -- a few background/gutter groups transparent after loading the theme.
       vim.g.nightflyCursorColor = false
       vim.g.nightflyItalics = true
       vim.g.nightflyNormalPmenu = false
@@ -42,110 +36,102 @@ return {
     end,
   },
 
-  -- Still installed because you requested it, but lazy so its bundled
-  -- colors/nightfly.vim cannot shadow the real bluz71 Nightfly scheme.
-  { 'rafi/awesome-vim-colorschemes', lazy = true },
+  {
+    'rafi/awesome-vim-colorschemes',
+    lazy = true,
+  },
 
-  -- Keep polyglot active for the old syntax/highlight behavior.  Treesitter is
-  -- installed but no longer takes over highlighting by default.
-  { 'sheerun/vim-polyglot', lazy = false, priority = 900 },
+  -- vim-polyglot is intentionally gone. Tree-sitter now owns syntax
+  -- highlighting whenever a parser is installed.
   { 'tpope/vim-surround', event = 'VeryLazy' },
   { 'tpope/vim-commentary', event = 'VeryLazy' },
+
   {
-  'jiangmiao/auto-pairs',
-  event = 'InsertEnter',
-  config = function()
-    local function setup_latex_pairs()
-      vim.b.AutoPairs = vim.fn.AutoPairsDefine({ ['$'] = '$' })
-      vim.cmd('silent! call AutoPairsInit()')
-    end
+    'jiangmiao/auto-pairs',
+    event = 'InsertEnter',
+    config = function()
+      local function setup_math_pairs()
+        vim.b.AutoPairs = vim.fn.AutoPairsDefine({ ['$'] = '$' })
+        vim.cmd('silent! call AutoPairsInit()')
+      end
 
-    local group = vim.api.nvim_create_augroup('latex_auto_pairs', { clear = true })
+      local group = vim.api.nvim_create_augroup('markup_auto_pairs', { clear = true })
 
-    vim.api.nvim_create_autocmd('FileType', {
-      group = group,
-      pattern = 'tex',
-      callback = setup_latex_pairs,
-    })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = group,
+        pattern = { 'tex', 'typst' },
+        callback = setup_math_pairs,
+      })
 
-    -- FileType may already have fired before auto-pairs lazy-loads.
-    if vim.bo.filetype == 'tex' then
-      setup_latex_pairs()
-    else
-      vim.cmd('silent! call AutoPairsInit()')
-    end
-  end,
-},
+      -- FileType may already have fired before auto-pairs lazy-loads.
+      if vim.bo.filetype == 'tex' or vim.bo.filetype == 'typst' then
+        setup_math_pairs()
+      else
+        vim.cmd('silent! call AutoPairsInit()')
+      end
+    end,
+  },
+
   { 'Vimjas/vim-python-pep8-indent', ft = 'python' },
   { 'joom/latex-unicoder.vim', ft = 'tex' },
-  { 'jdhao/better-escape.vim', event = 'InsertEnter', init = function()
-    vim.g.better_escape_interval = 200
-    vim.g.better_escape_shortcut = 'fd'
-  end },
 
-  -- Keep both devicon plugins because you explicitly requested both.
+  {
+    'jdhao/better-escape.vim',
+    event = 'InsertEnter',
+    init = function()
+      vim.g.better_escape_interval = 200
+      vim.g.better_escape_shortcut = 'fd'
+    end,
+  },
+
   { 'ryanoasis/vim-devicons', event = 'VeryLazy' },
   { 'kyazdani42/nvim-web-devicons', lazy = true },
 
   {
-  'lervag/vimtex',
-  lazy = false,
-  init = function()
-    vim.g.tex_flavor = 'latex'
+    'lervag/vimtex',
+    lazy = false,
+    init = function()
+      vim.g.tex_flavor = 'latex'
 
-    vim.g.vimtex_quickfix_enabled = 0
-    vim.g.vimtex_quickfix_mode = 0
-    vim.g.vimtex_fold_manual = 1
+      vim.g.vimtex_quickfix_enabled = 0
+      vim.g.vimtex_quickfix_mode = 0
+      vim.g.vimtex_fold_manual = 1
 
-    vim.g.vimtex_compiler_method = 'latexmk'
-    vim.g.vimtex_compiler_latexmk = {
-      callback = 1,
-      continuous = 1,
-      executable = 'latexmk',
-      options = {
-        '-verbose',
-        '-file-line-error',
-        '-synctex=1',
-        '-interaction=nonstopmode',
-      },
-    }
+      vim.g.vimtex_compiler_method = 'latexmk'
+      vim.g.vimtex_compiler_latexmk = {
+        callback = 1,
+        continuous = 1,
+        executable = 'latexmk',
+        options = {
+          '-verbose',
+          '-file-line-error',
+          '-synctex=1',
+          '-interaction=nonstopmode',
+        },
+      }
 
-    vim.g.vimtex_view_method = 'sioyek'
-    vim.g.vimtex_view_sioyek_exe = 'sioyek'
-
-    -- Keep this empty for now. Add --reuse-instance later only after it works.
-    vim.g.vimtex_view_sioyek_options = ''
-
-    vim.g.vimtex_callback_progpath = vim.fn.exepath('nvim')
-  end,
-},
-
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    cmd = { 'TSInstall', 'TSUpdate', 'TSModuleInfo', 'TSBufEnable', 'TSBufDisable' },
-    opts = {
-      ensure_installed = {
-        'bash', 'c', 'cpp', 'css', 'html', 'java', 'javascript', 'json',
-        'latex', 'lua', 'markdown', 'python', 'typescript', 'vim', 'vimdoc',
-      },
-      -- This restores your old colors: vim-polyglot + nightfly handle syntax.
-      highlight = { enable = false },
-      indent = { enable = false },
-      auto_install = false,
-    },
-    config = function(_, opts)
-      local ok, configs = pcall(require, 'nvim-treesitter.configs')
-      if ok then configs.setup(opts) end
+      vim.g.vimtex_view_method = 'sioyek'
+      vim.g.vimtex_view_sioyek_exe = 'sioyek'
+      vim.g.vimtex_view_sioyek_options = ''
+      vim.g.vimtex_callback_progpath = vim.fn.exepath('nvim')
     end,
   },
 
   { 'nvim-lua/plenary.nvim', lazy = true },
   { 'nvim-lua/popup.nvim', lazy = true },
   { 'MunifTanjim/nui.nvim', lazy = true },
-  { 'tpope/vim-dispatch', cmd = { 'Dispatch', 'Make', 'Start' } },
-  { 'miyakogi/seiya.vim', event = 'VeryLazy', init = function()
-    vim.g.seiya_auto_enable = 1
-    vim.g.seiya_target_groups = vim.fn.has('nvim') == 1 and { 'guibg' } or { 'ctermbg' }
-  end },
+
+  {
+    'tpope/vim-dispatch',
+    cmd = { 'Dispatch', 'Make', 'Start' },
+  },
+
+  {
+    'miyakogi/seiya.vim',
+    event = 'VeryLazy',
+    init = function()
+      vim.g.seiya_auto_enable = 1
+      vim.g.seiya_target_groups = vim.fn.has('nvim') == 1 and { 'guibg' } or { 'ctermbg' }
+    end,
+  },
 }
