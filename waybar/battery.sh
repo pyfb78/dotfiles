@@ -1,19 +1,25 @@
  #!/bin/bash
 
-# Get battery status from acpi
-info=$(acpi)
+# Get battery and AC adapter status from acpi
+info=$(acpi -b)
+ac_info=$(acpi -a)
+
 icon=""
-charge=$(echo "$info" | grep -oP '\d+(?=%)')
+charge=$(echo "$info" | grep -oP '\d+(?=%)' | head -1)
 
 # Extract time remaining (if present)
-# It usually appears like "xx:yy:zz remaining" or "xx:yy:zz until charged"
-time_left=$(echo "$info" | grep -oP '\d{2}:\d{2}:\d{2}')
+time_left=$(echo "$info" | grep -oP '\d{2}:\d{2}:\d{2}' | head -1)
 
-# Get the current time
-current_time=$(date +"%H:%M:%S")
+# Check whether charger is connected
+if echo "$ac_info" | grep -q "on-line"; then
+    plugged_in=true
+else
+    plugged_in=false
+fi
 
-# Determine the battery icon based on charge percentage
-if [[ "$info" == *"Charging"* ]]; then
+# Determine icon
+if $plugged_in; then
+    # Always show lightning bolt whenever charger is connected
     icon=""
 else
     if [ "$charge" -gt 87 ]; then
@@ -31,15 +37,14 @@ fi
 
 # Format tooltip message
 tooltip="Battery: $charge%"
+
 if [[ -n "$time_left" ]]; then
-    if [[ "$info" == *"Charging"* ]]; then
+    if $plugged_in; then
         tooltip+="\nTime to full: $time_left"
     else
         tooltip+="\nTime remaining: $time_left"
     fi
 fi
-# tooltip+="\nTime now: $current_time"
 
 # Output JSON
 echo "{\"text\": \"$icon $charge%\", \"tooltip\": \"${tooltip//\"/\\\"}\"}"
-
